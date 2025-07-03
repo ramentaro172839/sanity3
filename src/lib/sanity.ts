@@ -18,7 +18,7 @@ export function urlFor(source: SanityImageSource) {
 
 export async function getPosts() {
   const posts = await client.fetch(`
-    *[_type == "post" && !isDraft] | order(publishedAt desc) {
+    *[_type == "post"] | order(publishedAt desc) {
       _id,
       title,
       slug,
@@ -118,7 +118,7 @@ export async function getTags() {
 
 export async function getPostsByCategory(categorySlug: string) {
   const posts = await client.fetch(`
-    *[_type == "post" && !isDraft && references(*[_type == "category" && slug.current == $categorySlug]._id)] | order(publishedAt desc) {
+    *[_type == "post" && references(*[_type == "category" && slug.current == $categorySlug]._id)] | order(publishedAt desc) {
       _id,
       title,
       slug,
@@ -146,7 +146,7 @@ export async function getPostsByCategory(categorySlug: string) {
 
 export async function getPostsByTag(tagSlug: string) {
   const posts = await client.fetch(`
-    *[_type == "post" && !isDraft && references(*[_type == "tag" && slug.current == $tagSlug]._id)] | order(publishedAt desc) {
+    *[_type == "post" && references(*[_type == "tag" && slug.current == $tagSlug]._id)] | order(publishedAt desc) {
       _id,
       title,
       slug,

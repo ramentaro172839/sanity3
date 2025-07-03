@@ -1,4 +1,7 @@
 import Link from 'next/link'
+import Image from 'next/image'
+import { getPosts, urlFor } from '@/lib/sanity'
+import { Post } from '@/types'
 
 // ヒーローセクション
 function HeroSection() {
@@ -188,13 +191,104 @@ function CommunitySection() {
   )
 }
 
-export default function HomePage() {
+// 最新ブログ記事セクション
+async function LatestBlogSection() {
+  try {
+    const posts = await getPosts()
+    const latestPosts = posts.slice(0, 3) // 最新3件を取得
+
+    return (
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">
+            最新のブログ記事
+          </h2>
+          
+          {latestPosts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {latestPosts.map((post: Post) => (
+                <article key={post._id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                  {post.mainImage && (
+                    <div className="relative h-48">
+                      <Image
+                        src={urlFor(post.mainImage).width(800).height(400).url()}
+                        alt={post.mainImage.alt || post.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold mb-2 text-gray-800">
+                      <Link 
+                        href={`/blog/${post.slug.current}`} 
+                        className="hover:text-orange-600 transition-colors"
+                      >
+                        {post.title}
+                      </Link>
+                    </h3>
+                    {post.excerpt && (
+                      <p className="text-gray-600 mb-4 line-clamp-3">
+                        {post.excerpt}
+                      </p>
+                    )}
+                    <div className="flex items-center justify-between text-sm text-gray-500">
+                      <time dateTime={post.publishedAt}>
+                        {new Date(post.publishedAt).toLocaleDateString('ja-JP')}
+                      </time>
+                      {post.author && (
+                        <span>by {post.author.name}</span>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-600 text-lg">
+                まだブログ記事がありません。
+              </p>
+            </div>
+          )}
+          
+          <div className="text-center mt-12">
+            <Link 
+              href="/blog" 
+              className="inline-block bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors"
+            >
+              すべての記事を見る
+            </Link>
+          </div>
+        </div>
+      </section>
+    )
+  } catch {
+    return (
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">
+            最新のブログ記事
+          </h2>
+          <div className="text-center py-12">
+            <p className="text-gray-600 text-lg">
+              記事の読み込み中にエラーが発生しました。
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+}
+
+export default async function HomePage() {
   return (
     <div>
       <HeroSection />
       <AboutSection />
       <GallerySection />
       <ActivitiesSection />
+      <LatestBlogSection />
       <CommunitySection />
     </div>
   )

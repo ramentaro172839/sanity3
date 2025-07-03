@@ -1,26 +1,40 @@
 
 > ramen-taro-site@0.1.0 dev
-> next dev --turbopack --port 3001
+> next dev --turbopack
 
    ▲ Next.js 15.3.4 (Turbopack)
-   - Local:        http://localhost:3001
-   - Network:      http://192.168.11.6:3001
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.11.6:3000
    - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 2.8s
+ ✓ Ready in 1928ms
  ○ Compiling /blog ...
- ✓ Compiled /blog in 8.2s
- GET /blog 200 in 9849ms
- ○ Compiling /gallery ...
- ✓ Compiled /gallery in 2.1s
- GET /gallery 200 in 2302ms
- ○ Compiling /profile ...
- ✓ Compiled /profile in 1735ms
- GET /profile 200 in 1868ms
+ ✓ Compiled /blog in 8.7s
+ GET /blog 200 in 10203ms
+ GET /blog 200 in 980ms
+ GET /blog 200 in 847ms
+ GET /blog 200 in 1016ms
+ GET /blog 200 in 1035ms
+ ○ Compiling / ...
+ ✓ Compiled / in 2.5s
+ GET / 200 in 3150ms
  ○ Compiling /blog/[slug] ...
- ✓ Compiled /blog/[slug] in 2.7s
- GET /blog/test-post 404 in 5184ms
- ✓ Compiled in 218ms
- ✓ Compiled in 314ms
- ✓ Compiled in 1290ms
+ ✓ Compiled /blog/[slug] in 3.5s
+Each child in a list should have a unique "key" prop.
+
+Check the top-level render call using <LinkComponent>. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the top-level render call using <LinkComponent>. See https://react.dev/link/warning-keys for more information.
+ GET /blog/hamcup-new-challenge 200 in 5897ms
+ ○ Compiling /blog/category/[category] ...
+ ✓ Compiled /blog/category/[category] in 4.9s
+ GET /blog/category/hamcup-community 200 in 8281ms
+ GET /blog/category/hamcup-community 200 in 986ms
+ GET /blog/category/hamcup-community 200 in 986ms
+ GET /blog/category/hamcup-community 200 in 1075ms
+ ○ Compiling /blog/tag/[tag] ...
+ ✓ Compiled /blog/tag/[tag] in 4.7s
+ GET /blog/tag/digital-art 200 in 8145ms
+[?25h

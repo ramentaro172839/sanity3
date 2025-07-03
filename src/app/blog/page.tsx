@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { getPosts, getCategories } from '@/lib/sanity'
+import { getPosts, getCategories, urlFor } from '@/lib/sanity'
 import { Post, Category, Tag } from '@/types'
 
 export default async function BlogPage() {
@@ -69,7 +69,7 @@ export default async function BlogPage() {
                 {post.mainImage && (
                   <div className="relative h-48">
                     <Image
-                      src={post.mainImage.asset._ref}
+                      src={urlFor(post.mainImage).width(800).height(400).url()}
                       alt={post.mainImage.alt || post.title}
                       fill
                       className="object-cover"

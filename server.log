@@ -1,0 +1,26 @@
+
+> ramen-taro-site@0.1.0 dev
+> next dev --turbopack --port 3001
+
+   ▲ Next.js 15.3.4 (Turbopack)
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.11.6:3001
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 2.8s
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 8.2s
+ GET /blog 200 in 9849ms
+ ○ Compiling /gallery ...
+ ✓ Compiled /gallery in 2.1s
+ GET /gallery 200 in 2302ms
+ ○ Compiling /profile ...
+ ✓ Compiled /profile in 1735ms
+ GET /profile 200 in 1868ms
+ ○ Compiling /blog/[slug] ...
+ ✓ Compiled /blog/[slug] in 2.7s
+ GET /blog/test-post 404 in 5184ms
+ ✓ Compiled in 218ms
+ ✓ Compiled in 314ms
+ ✓ Compiled in 1290ms

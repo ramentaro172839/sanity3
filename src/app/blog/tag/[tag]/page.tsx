@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getPostsByTag, getTags } from '@/lib/sanity'
+import { getPostsByTag, getTags, urlFor } from '@/lib/sanity'
 import { Post, Category, Tag } from '@/types'
 
 interface TagPageProps {
@@ -85,7 +85,7 @@ export default async function TagPage({ params }: TagPageProps) {
                   {post.mainImage && (
                     <div className="relative h-48">
                       <Image
-                        src={post.mainImage.asset._ref}
+                        src={urlFor(post.mainImage).width(800).height(400).url()}
                         alt={post.mainImage.alt || post.title}
                         fill
                         className="object-cover"

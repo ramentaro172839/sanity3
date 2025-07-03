@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getPostsByCategory, getCategories } from '@/lib/sanity'
+import { getPostsByCategory, getCategories, urlFor } from '@/lib/sanity'
 import { Category, Post, Tag } from '@/types'
 
 interface CategoryPageProps {
@@ -88,7 +88,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   {post.mainImage && (
                     <div className="relative h-48">
                       <Image
-                        src={post.mainImage.asset._ref}
+                        src={urlFor(post.mainImage).width(800).height(400).url()}
                         alt={post.mainImage.alt || post.title}
                         fill
                         className="object-cover"

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getPost, getPosts } from '@/lib/sanity'
+import { getPost, getPosts, urlFor } from '@/lib/sanity'
 import { Post, Category, Tag } from '@/types'
 
 interface BlogPostPageProps {
@@ -86,7 +86,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {post.mainImage && (
               <div className="relative h-64 md:h-96 rounded-lg overflow-hidden mb-8">
                 <Image
-                  src={post.mainImage.asset._ref}
+                  src={urlFor(post.mainImage).width(800).height(400).url()}
                   alt={post.mainImage.alt || post.title}
                   fill
                   className="object-cover"
@@ -183,7 +183,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">この記事をシェア</h3>
                 <div className="flex gap-4">
                   <a
-                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`}
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001'}/blog/${post.slug.current}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"

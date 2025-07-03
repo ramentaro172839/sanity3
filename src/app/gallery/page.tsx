@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 export default function GalleryPage() {
   // 年代別作品データ（プレースホルダー）
   const artworksByYear = {

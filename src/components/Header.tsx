@@ -16,6 +16,9 @@ export default function Header() {
             <Link href="/" className="text-gray-700 hover:text-orange-600 transition-colors">
               ホーム
             </Link>
+            <Link href="/blog" className="text-gray-700 hover:text-orange-600 transition-colors">
+              ブログ
+            </Link>
             <Link href="/gallery" className="text-gray-700 hover:text-orange-600 transition-colors">
               作品ギャラリー
             </Link>

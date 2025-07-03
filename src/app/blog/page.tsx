@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { getPosts, getCategories } from '@/lib/sanity'
-import { Post, Category } from '@/types'
+import { Post, Category, Tag } from '@/types'
 
 export default async function BlogPage() {
   try {
@@ -18,8 +18,24 @@ export default async function BlogPage() {
             ブログ
           </h1>
           <p className="text-xl text-gray-600">
-            ラーメンの世界を探求した記録をお届けします
+            らーめん太郎の創作活動や日々の出来事をお届けします
           </p>
+        </div>
+
+        {/* 検索ボックス */}
+        <div className="max-w-md mx-auto mb-8">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="記事を検索..."
+              className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+            />
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+              <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         {/* カテゴリーフィルター */}
@@ -32,7 +48,7 @@ export default async function BlogPage() {
               >
                 すべて
               </Link>
-              {categories.map((category) => (
+              {categories.map((category: Category) => (
                 <Link
                   key={category._id}
                   href={`/blog/category/${category.slug.current}`}
@@ -48,7 +64,7 @@ export default async function BlogPage() {
         {/* 記事一覧 */}
         {posts && posts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.map((post) => (
+            {posts.map((post: Post) => (
               <article key={post._id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                 {post.mainImage && (
                   <div className="relative h-48">
@@ -63,7 +79,7 @@ export default async function BlogPage() {
                 <div className="p-6">
                   {/* カテゴリータグ */}
                   <div className="flex items-center mb-2">
-                    {post.categories?.map((category) => (
+                    {post.categories?.map((category: Category) => (
                       <span
                         key={category._id}
                         className="inline-block bg-orange-100 text-orange-600 text-xs px-2 py-1 rounded mr-2"
@@ -103,7 +119,7 @@ export default async function BlogPage() {
                   {/* タグ */}
                   {post.tags && post.tags.length > 0 && (
                     <div className="mt-4 flex flex-wrap gap-2">
-                      {post.tags.map((tag) => (
+                      {post.tags.map((tag: Tag) => (
                         <Link
                           key={tag._id}
                           href={`/blog/tag/${tag.slug.current}`}
@@ -127,7 +143,7 @@ export default async function BlogPage() {
         )}
       </div>
     )
-  } catch (error) {
+  } catch {
     return (
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center">

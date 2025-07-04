@@ -1,12 +1,19 @@
 {
-  "name": "sanity",
+  "name": "ramen-taro-sanity-studio",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "sanity": "^3.96.0",
+    "@sanity/vision": "^3.96.0"
+  },
+  "keywords": ["sanity", "cms"],
+  "author": "らーめん太郎",
+  "license": "MIT",
+  "description": "らーめん太郎ブログのSanity Studio"
 }

@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPost, getPosts, urlFor } from '@/lib/sanity'
 import { Post, Category, Tag } from '@/types'
+import { generatePostMetadata } from '@/lib/metadata'
+import { generateArticleStructuredData, generateBreadcrumbStructuredData } from '@/lib/structured-data'
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -31,6 +33,21 @@ function generateTableOfContents(body: unknown[]) {
   }))
 }
 
+// メタデータ生成
+export async function generateMetadata({ params }: BlogPostPageProps) {
+  const { slug } = await params
+  const post = await getPost(slug)
+  
+  if (!post) {
+    return {
+      title: 'ページが見つかりません',
+      description: 'お探しのページは見つかりませんでした。'
+    }
+  }
+
+  return generatePostMetadata(post)
+}
+
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   try {
     const { slug } = await params
@@ -41,9 +58,30 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     }
 
     const tableOfContents = generateTableOfContents(post.body || [])
+    
+    // 構造化データ生成
+    const articleStructuredData = generateArticleStructuredData(post)
+    const breadcrumbStructuredData = generateBreadcrumbStructuredData([
+      { name: 'ホーム', url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000' },
+      { name: 'ブログ', url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/blog` },
+      { name: post.title, url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/blog/${post.slug.current}` }
+    ])
 
     return (
-      <article className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(articleStructuredData),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(breadcrumbStructuredData),
+          }}
+        />
+        <article className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-4xl mx-auto">
           {/* パンくずナビ */}
           <nav className="mb-8">
@@ -207,6 +245,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </section>
         </div>
       </article>
+      </>
     )
   } catch {
     notFound()

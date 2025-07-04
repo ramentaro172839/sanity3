@@ -4,6 +4,8 @@ import "./globals.css";
 import "../styles/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { generateSiteMetadata } from "@/lib/metadata";
+import { generateWebsiteStructuredData, generatePersonStructuredData } from "@/lib/structured-data";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,18 +17,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "らーめん太郎 | 公式サイト兼ブログ",
-  description: "らーめん太郎の公式サイト兼ブログ。ラーメンの世界を探求し、美味しい情報をお届けします。",
-};
+export const metadata: Metadata = generateSiteMetadata();
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const websiteStructuredData = generateWebsiteStructuredData();
+  const personStructuredData = generatePersonStructuredData();
+
   return (
     <html lang="ja">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteStructuredData),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personStructuredData),
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
